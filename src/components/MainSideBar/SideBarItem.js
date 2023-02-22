@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/react"
 
 const SideBarItem = ({ text }) =>
   <Button 
-    py='2' 
+    py='6'
     colorScheme='gray' 
     fontSize='xl' 
     variant='ghost'
@@ -10,7 +10,9 @@ const SideBarItem = ({ text }) =>
     _hover={{ 
       bg: 'teal.200',
       color: 'gray.700'
-    }}>
+    }}
+    m='0'
+  >
     {text}
   </Button>
 
