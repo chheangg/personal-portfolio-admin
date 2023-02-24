@@ -7,6 +7,7 @@ const SideBarItem = ({ text, path, icon }) => {
   return (
     <Button
       justifyContent='flex-start'
+      py='6'
       colorScheme='gray'
       fontWeight='bold'
       fontSize='l' 

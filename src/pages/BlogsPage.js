@@ -3,7 +3,7 @@ import Page from "./Page"
 const paths = [
   {
     title: 'Home',
-    href: '/home'
+    href: '/'
   },
   {
     title: 'Blogs',

@@ -4,7 +4,7 @@ import SideBarItem from "./SideBarItem"
 
 const MainSideBar = () => {
   return (
-    <Flex flexDir='column' gap='2'>
+    <Flex flexDir='column'>
       <SideBarItem text='Home' path='/' icon={mdiHome} />
       <SideBarItem text='Create' path='/create' icon={mdiPlus} />
       <SideBarItem text='Blogs' path='/blogs' icon={mdiPost} />

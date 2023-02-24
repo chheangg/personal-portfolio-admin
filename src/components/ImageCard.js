@@ -1,7 +1,7 @@
 import { Box, Grid, Card, CardHeader } from "@chakra-ui/react"
 import { Icon } from "@mdi/react"
 
-const ImageCard = ({ icon, text }) =>
+const ImageCard = ({ icon, text, onClick }) =>
   <Card
     bgColor='gray.200'
     p={[4, 10]}
@@ -12,6 +12,7 @@ const ImageCard = ({ icon, text }) =>
       bgColor: 'teal.300',
       color: 'gray.50'
     }}
+    onClick={onClick}
   >
     <Icon size={6} path={icon}/>
     <CardHeader>{text}</CardHeader> 
