@@ -1,13 +1,15 @@
 import { Button} from "@chakra-ui/react"
+import IconSideBarItem from "../IconSideBarItem"
 import { useNavigate } from "react-router-dom"
 
-const SideBarItem = ({ text, path }) => {
+const SideBarItem = ({ text, path, icon }) => {
   const navigate = useNavigate()
   return (
     <Button
+      justifyContent='flex-start'
       colorScheme='gray'
       fontWeight='bold'
-      fontSize='xl' 
+      fontSize='l' 
       variant='ghost'
       borderRadius='0'
       _hover={{ 
@@ -17,7 +19,8 @@ const SideBarItem = ({ text, path }) => {
       m='0'
       onClick={() => navigate(path)}
     >
-      {text}
+      <IconSideBarItem icon={icon} />
+      <span>{text}</span>
     </Button>
   )
 }
