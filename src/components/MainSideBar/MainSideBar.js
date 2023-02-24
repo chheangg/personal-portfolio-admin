@@ -3,15 +3,11 @@ import SideBarItem from "./SideBarItem"
 
 const MainSideBar = () => {
   return (
-    <Flex flexDir='column' alignItems='stretch'>
-      <SideBarItem text='Home' />
-      <Divider m='0' orientation="horizontal" />
-      <SideBarItem text='Create' />
-      <Divider m='0' orientation="horizontal" />
-      <SideBarItem text='Blogs' />
-      <Divider m='0' orientation="horizontal" />
-      <SideBarItem text='Topics' />
-      <Divider m='0' orientation="horizontal" />
+    <Flex flexDir='column'>
+      <SideBarItem text='Home' path='/' />
+      <SideBarItem text='Create' path='/create' />
+      <SideBarItem text='Blogs' path='/blogs' />
+      <SideBarItem text='Topics' path='/topics' />
     </Flex>
   )
 }
