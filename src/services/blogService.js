@@ -1,10 +1,11 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from "axios";
 
-const baseUrl = '/api/topics'
+const baseUrl = '/api/blogs'
 
-const create = async (name) => {
-  const result = await axios.post(baseUrl, { name })
+const create = async (blog) => {
+  console.log(blog)
+  const result = await axios.post(baseUrl, blog)
   return result.data
 }
 
