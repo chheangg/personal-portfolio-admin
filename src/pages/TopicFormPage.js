@@ -40,7 +40,7 @@ const BlogFormPage = () => {
       <form onSubmit={handleSubmit}>
         <FormControl w='20vw' ml='8' isInvalid={error}>
           <FormLabel htmlFor="name">Topic name</FormLabel>
-          <Input id='name' name='name' placeholder="Must be at least 3 characters" variant='outline' />
+          <Input id='name' name='name' placeholder="Must be at least 3 characters" variant='outline' bgColor='whiteAlpha.900' />
           <FormErrorMessage>{error}</FormErrorMessage>
           <Button 
             type='submit'

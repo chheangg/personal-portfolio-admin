@@ -3,9 +3,27 @@ import axios from "axios";
 
 const baseUrl = '/api/blogs'
 
-const create = async (blog) => {
-  console.log(blog)
-  const result = await axios.post(baseUrl, blog)
+const create = async (blog, thumbnail) => {
+  const formData = new FormData()
+  if (thumbnail) {
+    formData.append('thumbnail', thumbnail)
+    console.log(thumbnail)
+  }
+
+  for (const key in blog) {
+    formData.append(key, blog[key])
+  }
+
+  const result = await axios.post(
+    baseUrl,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+  )
+    
   return result.data
 }
 

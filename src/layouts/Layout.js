@@ -8,11 +8,11 @@ import MainSideBar from "../components/MainSideBar/MainSideBar"
 
 const Layout = () => {
   return (
-    <Grid h='calc(100vh)' color='gray.50' templateColumns='1fr 5fr'>
+    <Grid color='gray.50' templateColumns='1fr 5fr' h='100vh' maxh='100vh'>
       <GridItem bgColor='gray.700' pt='14'>
         <MainSideBar />
       </GridItem>
-      <GridItem bgColor='gray.50' color='gray.700'>
+      <GridItem bgColor='gray.50' color='gray.700'  maxH='100vh' overflow='scroll'>
         <Outlet />
       </GridItem>
     </Grid>

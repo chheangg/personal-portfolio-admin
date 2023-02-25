@@ -64,7 +64,9 @@ const BlogFormPage = () => {
       author: '63d77e02d7289c7834d09a06',
     }
 
-    blogService.create(blog)
+    const thumbnail = event.target.thumbnail.files[0]
+
+    blogService.create(blog, thumbnail)
       .then(data => {
         navigate('/blogs')
       })
@@ -113,24 +115,24 @@ const BlogFormPage = () => {
 
   return (
     <Page title='Blog Form' paths={paths} >
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <Box m='8'>
           <FormControl isInvalid={nameError}>
             <FormLabel htmlFor="name">Blog name</FormLabel>
-            <Input id='name' name='name' w='20vw' placeholder="Must be at least 3 characters" variant='outline' />
+            <Input id='name' name='name' w='20vw' placeholder="Must be at least 3 characters" variant='outline' bgColor='whiteAlpha.900'/>
             <FormErrorMessage key={uuidv4()}>{nameError}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={captionError} mt='4'>
             <FormLabel htmlFor="caption" >Blog's caption</FormLabel>
-            <Input id='caption' name='caption' w='20vw' placeholder="Must be at least 3 characters" variant='outline' />
+            <Input id='caption' name='caption' w='20vw' placeholder="Must be at least 3 characters" variant='outline' bgColor='whiteAlpha.900'/>
             <FormErrorMessage key={uuidv4()}>{captionError}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={topicError} mt='4'>
             <FormLabel htmlFor="caption" >Blog's topics</FormLabel>
-            <Select placeholder="Select topic" w='20vw' onChange={handleSelect}>
+            <Select placeholder="Select topic" w='20vw' onChange={handleSelect} bgColor='whiteAlpha.900'>
               {topics.map(topic => <option key={topic.id} value={topic.id}>{topic.name}</option>)}
             </Select>
-            <Wrap m='4' w='30vw'>
+            <Wrap w='30vw' mt='2'>
               {selectedTopics.map(topic =>
                 <WrapItem key={topic.id}>
                   <Tag size='md' colorScheme='teal'>
@@ -142,7 +144,11 @@ const BlogFormPage = () => {
             </Wrap>
             <FormErrorMessage key={uuidv4()}>{topicError}</FormErrorMessage>
           </FormControl>
-          <FormControl>
+          <FormControl mt='4'>
+            <FormLabel htmlFor="thumbnail">Blog's Thumbnail</FormLabel>
+            <input id='thumbnail' name='thumbnail' type='file' />
+          </FormControl>
+          <FormControl mt='6'>
             <Editor
               apiKey={process.env.REACT_APP_TINYMCE_APIKEY}
               onInit={(evt, editor) => editorRef.current = editor}
