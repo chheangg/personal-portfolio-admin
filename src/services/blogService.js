@@ -11,7 +11,7 @@ const create = async (blog) => {
 
 const getAll = async () => {
   const result = await axios.get(baseUrl)
-  return result.data.topics
+  return result.data.blogs
 }
 
 export default { create, getAll }

@@ -56,7 +56,6 @@ const BlogFormPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(selectedTopics.map(topic => topic.id))
     const blog = {
       title: event.target.name.value,
       caption: event.target.caption.value,
@@ -78,6 +77,9 @@ const BlogFormPage = () => {
                 break;
               case 'caption':
                 setCaptionError(error.msg);
+                break;
+              case 'topic':
+                setTopicError(error.msg);
                 break;
               default:
                 break;
