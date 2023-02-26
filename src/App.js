@@ -8,8 +8,8 @@ import HomePage from "./pages/HomePage"
 import CreatePage from "./pages/CreatePage"
 import BlogsPage from "./pages/BlogsPage"
 import TopicsPage from "./pages/TopicsPage"
-import BlogFormPage from "./pages/BlogFormPage"
-import TopicFormPage from "./pages/TopicFormPage"
+import CreateBlogPage from "./pages/CreateBlogPage"
+import CreateTopicPage from "./pages/CreateTopicPage"
 
 const App = () => {
   return (
@@ -19,8 +19,8 @@ const App = () => {
         <Route path='/create' element={<CreatePage />}/>
         <Route path='/blogs' index element={<BlogsPage />}/>
         <Route path='/topics' index element={<TopicsPage />}/>
-        <Route path='/create/blog' element={<BlogFormPage />} />
-        <Route path='/create/topic' element={<TopicFormPage />} />
+        <Route path='/create/blog' element={<CreateBlogPage />} />
+        <Route path='/create/topic' element={<CreateTopicPage />} />
       </Route>
     </Routes>
   )

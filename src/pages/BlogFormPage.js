@@ -21,29 +21,13 @@ import {
 
 import topicService from "../services/topicService";
 import blogService from "../services/blogService";
-import { progress } from "framer-motion";
 
-const paths = [
-  {
-    title: 'Home',
-    href: '/'
-  },
-  {
-    title: 'Create',
-    href: '/create'
-  },
-  {
-    title: 'Blog Form',
-    href: '/create/blog'
-  }
-]
-
-const BlogFormPage = () => {
+const BlogForm = ({ title, paths, content, formValue }) => {
   const [nameError, setNameError] = useState(null)
   const [captionError, setCaptionError] = useState(null)
   const [topicError, setTopicError] = useState(null)
   const [topics, setTopics] = useState([])
-  const [selectedTopics, setSelectedTopics] = useState([])
+  const [selectedTopics, setSelectedTopics] = useState([...formValue.topics])
   const editorRef = useRef(null)
   const navigate = useNavigate()
 
@@ -117,17 +101,17 @@ const BlogFormPage = () => {
   }
 
   return (
-    <Page title='Blog Form' paths={paths} >
+    <Page title={title} paths={paths} >
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <Box m='8'>
           <FormControl isInvalid={nameError}>
             <FormLabel htmlFor="name">Blog name</FormLabel>
-            <Input id='name' name='name' w='20vw' placeholder="Must be at least 3 characters" constiant='outline' bgColor='whiteAlpha.900'/>
+            <Input defaultValue={formValue.name} id='name' name='name' w='20vw' placeholder="Must be at least 3 characters" bgColor='whiteAlpha.900'/>
             <FormErrorMessage key={uuidv4()}>{nameError}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={captionError} mt='4'>
             <FormLabel htmlFor="caption" >Blog's caption</FormLabel>
-            <Input id='caption' name='caption' w='20vw' placeholder="Must be at least 3 characters" constiant='outline' bgColor='whiteAlpha.900'/>
+            <Input defaultValue={formValue.caption} id='caption' name='caption' w='20vw' placeholder="Must be at least 3 characters" bgColor='whiteAlpha.900'/>
             <FormErrorMessage key={uuidv4()}>{captionError}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={topicError} mt='4'>
@@ -155,7 +139,7 @@ const BlogFormPage = () => {
             <Editor
               apiKey={process.env.REACT_APP_TINYMCE_APIKEY}
               onInit={(evt, editor) => editorRef.current = editor}
-              initialValue="<p>This is the initial content of the editor.</p>"
+              initialValue={content}
               init={{
                 height: 500,
                 menubar: false,
@@ -228,6 +212,18 @@ const BlogFormPage = () => {
       </form>
     </Page>
   )
+} 
+
+const BlogFormPage = (title, paths, content, formValue) => {
+  if (!formValue) {
+    formValue = {
+      name: '',
+      caption: '',
+      topics: '',
+      content: "<p>This is the initial content of the editor.</p>"
+    }
+  }
+  return () => <BlogForm content={content} formValue={formValue} title={title} paths={paths} />
 }
 
 export default BlogFormPage

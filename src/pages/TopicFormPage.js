@@ -1,25 +1,10 @@
 import Page from "./Page"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Input, FormLabel, Button, Box, FormErrorMessage, FormControl, } from '@chakra-ui/react'
+import { Input, FormLabel, Button, FormErrorMessage, FormControl, } from '@chakra-ui/react'
 import topicService from "../services/topicService"
 
-const paths = [
-  {
-    title: 'Home',
-    href: '/'
-  },
-  {
-    title: 'Create',
-    href: '/create'
-  },
-  {
-    title: 'Topic Form',
-    href: '/create/topic'
-  }
-]
-
-const BlogFormPage = () => {
+const TopicForm = ({ title, paths, formValue }) => {
   const [error, setError] = useState('')
   const navigate = useNavigate()
   const handleSubmit = (event) => {
@@ -36,11 +21,11 @@ const BlogFormPage = () => {
       )
   }
   return (
-    <Page title='Topic Form' paths={paths} >
+    <Page title={title} paths={paths} >
       <form onSubmit={handleSubmit}>
         <FormControl w='20vw' ml='8' isInvalid={error}>
           <FormLabel htmlFor="name">Topic name</FormLabel>
-          <Input id='name' name='name' placeholder="Must be at least 3 characters" variant='outline' bgColor='whiteAlpha.900' />
+          <Input defaultValue={formValue.name} id='name' name='name' placeholder="Must be at least 3 characters" variant='outline' bgColor='whiteAlpha.900' />
           <FormErrorMessage>{error}</FormErrorMessage>
           <Button 
             type='submit'
@@ -59,4 +44,13 @@ const BlogFormPage = () => {
   )
 }
 
-export default BlogFormPage
+const TopicFormPage = (title, paths, formValue) => {
+  if (!formValue) {
+    formValue = {
+      name: ''
+    }
+  }
+  return () => <TopicForm title={title} paths={paths} formValue={formValue}/>
+}
+
+export default TopicFormPage
