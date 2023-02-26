@@ -14,6 +14,7 @@ import blogService from "../services/blogService"
 import Page from "./Page"
 import { DateTime } from "luxon"
 import Profile from "../components/Profile"
+import ContentDropDown from "../components/ContentDropDown"
 
 const paths = [
   {
@@ -83,7 +84,9 @@ const BlogsPage = () => {
                 <Td>{blog.title}</Td>
                 <Td>{blog.topics.length}</Td>
                 <Td>{DateTime.fromISO(blog.timestamp).toLocaleString(DateTime.DATETIME_FULL)}</Td>
-                <Td w="calc(100%)"></Td>
+                <Td w="calc(100%)">
+                  <ContentDropDown />
+                </Td>
               </Tr>
             )}
           </Tbody>

@@ -13,6 +13,8 @@ import {
 import topicService from "../services/topicService"
 import Page from "./Page"
 
+import ContentDropDown from "../components/ContentDropDown"
+
 const paths = [
   {
     title: 'Home',
@@ -77,7 +79,7 @@ const TopicsPage = () => {
               <Tr key={topic.id}>
                 <Td>{topic.name}</Td>
                 <Td>{topic.blogs.length} blogs</Td>
-                <Td w='calc(80%)'></Td>
+                <Td w='calc(80%)'><ContentDropDown /></Td>
               </Tr>
             )}
           </Tbody>
