@@ -21,6 +21,7 @@ import {
 
 import topicService from "../services/topicService";
 import blogService from "../services/blogService";
+import { progress } from "framer-motion";
 
 const paths = [
   {
@@ -65,6 +66,8 @@ const BlogFormPage = () => {
     }
 
     const thumbnail = event.target.thumbnail.files[0]
+
+    console.log(editorRef.current.getContent())
 
     blogService.create(blog, thumbnail)
       .then(data => {
@@ -119,12 +122,12 @@ const BlogFormPage = () => {
         <Box m='8'>
           <FormControl isInvalid={nameError}>
             <FormLabel htmlFor="name">Blog name</FormLabel>
-            <Input id='name' name='name' w='20vw' placeholder="Must be at least 3 characters" variant='outline' bgColor='whiteAlpha.900'/>
+            <Input id='name' name='name' w='20vw' placeholder="Must be at least 3 characters" constiant='outline' bgColor='whiteAlpha.900'/>
             <FormErrorMessage key={uuidv4()}>{nameError}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={captionError} mt='4'>
             <FormLabel htmlFor="caption" >Blog's caption</FormLabel>
-            <Input id='caption' name='caption' w='20vw' placeholder="Must be at least 3 characters" variant='outline' bgColor='whiteAlpha.900'/>
+            <Input id='caption' name='caption' w='20vw' placeholder="Must be at least 3 characters" constiant='outline' bgColor='whiteAlpha.900'/>
             <FormErrorMessage key={uuidv4()}>{captionError}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={topicError} mt='4'>
@@ -161,11 +164,52 @@ const BlogFormPage = () => {
                   'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
                   'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
                 ],
-                toolbar: 'undo redo | blocks | ' +
+                toolbar: 
+                  'undo redo | blocks | ' +
+                  'image ' +
                   'bold italic forecolor | alignleft aligncenter ' +
                   'alignright alignjustify | bullist numlist outdent indent | ' +
                   'removeformat | help',
-                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                images_file_types: 'jpg, png, jpeg, svg, webp',
+                file_picker_types: 'image',
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                file_picker_callback: function (cb, value, meta) {
+                  const input = document.createElement('input');
+                  input.setAttribute('type', 'file');
+                  input.setAttribute('accept', 'image/*');
+              
+                  input.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+              
+                    const reader = new FileReader();
+                    reader.addEventListener('load', () => {
+                      // Upload image!
+                      const id = 'blobid' + (new Date()).getTime();
+                      const blobCache = editorRef.current.editorUpload.blobCache;
+                      const base64 = reader.result.split(',')[1];
+                      const blobInfo = blobCache.create(id, file, base64);
+                      blobCache.add(blobInfo);
+
+                      cb(blobInfo.blobUri(), { title: file.name });
+                    });
+                    reader.readAsDataURL(file);
+                  });
+              
+                  input.click();
+                },
+                relative_urls: false,
+                images_upload_handler: async (blobInfo) => {
+                  let imageFile = new FormData();
+                  imageFile.append('image', blobInfo.blob());
+                  try {
+                    const { data } = await axios.post("/api/blogs/upload", imageFile)
+                    console.log(data.path)
+                    return Promise.resolve(data.path)
+                  } catch (error) {
+                    console.log(error)
+                    return;
+                  }
+                },
               }}
             />
           </FormControl>
