@@ -20,9 +20,8 @@ import {
 } from "@chakra-ui/react"
 
 import topicService from "../services/topicService";
-import blogService from "../services/blogService";
 
-const BlogForm = ({ title, paths, content, formValue }) => {
+const BlogForm = ({ title, paths, content, formValue, handleFormSubmit }) => {
   const [nameError, setNameError] = useState(null)
   const [captionError, setCaptionError] = useState(null)
   const [topicError, setTopicError] = useState(null)
@@ -41,40 +40,11 @@ const BlogForm = ({ title, paths, content, formValue }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const blog = {
-      title: event.target.name.value,
-      caption: event.target.caption.value,
-      topics: selectedTopics.map(topic => topic.id),
-      content: editorRef.current.getContent(),
-      author: '63d77e02d7289c7834d09a06',
-    }
-
-    const thumbnail = event.target.thumbnail.files[0]
-
-    console.log(editorRef.current.getContent())
-
-    blogService.create(blog, thumbnail)
-      .then(data => {
-        navigate('/blogs')
-      })
-      .catch(error => {
-        error.response.data.errors
-          .forEach(error => {
-            switch(error.param) {
-              case 'title':
-                setNameError(error.msg);
-                break;
-              case 'caption':
-                setCaptionError(error.msg);
-                break;
-              case 'topic':
-                setTopicError(error.msg);
-                break;
-              default:
-                break;
-            }
-          })
-      })
+    handleFormSubmit(event, selectedTopics, editorRef, navigate, {
+      setNameError,
+      setCaptionError,
+      setTopicError,
+    })
   }
 
   const handleSelect = (event) => {
@@ -214,7 +184,7 @@ const BlogForm = ({ title, paths, content, formValue }) => {
   )
 } 
 
-const BlogFormPage = (title, paths, content, formValue) => {
+const BlogFormPage = (title, paths, handleFormSubmit, content, formValue) => {
   if (!formValue) {
     formValue = {
       name: '',
@@ -223,7 +193,8 @@ const BlogFormPage = (title, paths, content, formValue) => {
       content: "<p>This is the initial content of the editor.</p>"
     }
   }
-  return () => <BlogForm content={content} formValue={formValue} title={title} paths={paths} />
+
+  return () => <BlogForm content={content} formValue={formValue} title={title} paths={paths} handleFormSubmit={handleFormSubmit}/>
 }
 
 export default BlogFormPage

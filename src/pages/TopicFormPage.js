@@ -2,23 +2,13 @@ import Page from "./Page"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Input, FormLabel, Button, FormErrorMessage, FormControl, } from '@chakra-ui/react'
-import topicService from "../services/topicService"
 
-const TopicForm = ({ title, paths, formValue }) => {
+const TopicForm = ({ title, paths, formValue, handleFormSubmit }) => {
   const [error, setError] = useState('')
   const navigate = useNavigate()
   const handleSubmit = (event) => {
     event.preventDefault()
-    topicService
-      .create(event.target['name'].value)
-      .then(data => {
-        navigate('/topics')
-      })
-      .catch(
-        error => {
-          setError(error.response.data.error)
-        }
-      )
+    handleFormSubmit(event, navigate, setError)
   }
   return (
     <Page title={title} paths={paths} >
@@ -44,13 +34,13 @@ const TopicForm = ({ title, paths, formValue }) => {
   )
 }
 
-const TopicFormPage = (title, paths, formValue) => {
+const TopicFormPage = (title, paths, handleFormSubmit, formValue) => {
   if (!formValue) {
     formValue = {
       name: ''
     }
   }
-  return () => <TopicForm title={title} paths={paths} formValue={formValue}/>
+  return () => <TopicForm title={title} paths={paths} formValue={formValue} handleFormSubmit={handleFormSubmit}/>
 }
 
 export default TopicFormPage
