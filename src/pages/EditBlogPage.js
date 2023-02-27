@@ -16,7 +16,7 @@ const paths = [
   }
 ]
 
-const handleFormSubmit = (event, selectedTopics, editorRef, navigate, errorHandler, blogId) => {
+const handleFormSubmit = (event, selectedTopics, editorRef, navigate, errorHandler, blogId, queryClient) => {
   const blog = {
     title: event.target.name.value,
     caption: event.target.caption.value,
@@ -28,6 +28,8 @@ const handleFormSubmit = (event, selectedTopics, editorRef, navigate, errorHandl
   const thumbnail = event.target.thumbnail.files[0]
   blogService.update(blogId, blog, thumbnail)
     .then(data => {
+      console.log(data)
+      queryClient.setQueryData(`blog-${blogId}`, data.updatedBlog)
       navigate('/blogs')
     })
     .catch(error => {

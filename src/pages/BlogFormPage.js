@@ -2,7 +2,7 @@ import Page from "./Page"
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect, useRef } from "react"
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { Editor } from '@tinymce/tinymce-react';
 import { useNavigate, useParams } from "react-router-dom"
 import { 
@@ -25,6 +25,7 @@ import topicService from "../services/topicService";
 import blogService from "../services/blogService";
 
 const BlogForm = ({ title, paths, getBlog, handleFormSubmit }) => {
+  const queryClient = useQueryClient()
   const [formValue, setFormValue] = useState({
     title: '',
     caption: '',
@@ -39,6 +40,8 @@ const BlogForm = ({ title, paths, getBlog, handleFormSubmit }) => {
   const editorRef = useRef(null)
   const navigate = useNavigate()
   const params = useParams();
+
+  console.log(selectedTopics)
   
   const result = useQuery(
     `blog-${params.blogId}`,
@@ -77,7 +80,7 @@ const BlogForm = ({ title, paths, getBlog, handleFormSubmit }) => {
       setNameError,
       setCaptionError,
       setTopicError,
-    }, params.blogId)
+    }, params.blogId, queryClient)
   }
 
   const handleSelect = (event) => {
