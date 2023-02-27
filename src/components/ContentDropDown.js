@@ -11,7 +11,7 @@ import {
 import { mdiDotsVertical, mdiFileEditOutline, mdiDelete } from '@mdi/js';
 import Icon from '@mdi/react'
 
-const ContentDropDown = () =>
+const ContentDropDown = ({ onEdit }) =>
   <Flex justifyContent='flex-end'>
     <Menu>
       <MenuButton
@@ -23,7 +23,7 @@ const ContentDropDown = () =>
       />
       <MenuList>
         <MenuGroup title='Option'>
-          <MenuItem icon={<Icon size={1} path={mdiFileEditOutline} />} >Edit</MenuItem>
+          <MenuItem icon={<Icon size={1} path={mdiFileEditOutline} />} onClick={onEdit} >Edit</MenuItem>
           <MenuItem icon={<Icon path={mdiDelete} size={1} />} color='red.500'>Delete</MenuItem>
         </MenuGroup>
       </MenuList>

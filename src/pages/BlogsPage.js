@@ -1,6 +1,5 @@
 import { useQuery } from "react-query"
 import { 
-  Stack,
   Skeleton,
   Table,
   Thead,
@@ -15,6 +14,8 @@ import Page from "./Page"
 import { DateTime } from "luxon"
 import Profile from "../components/Profile"
 import ContentDropDown from "../components/ContentDropDown"
+import { useNavigate } from "react-router-dom"
+import Loading from "../components/Loading"
 
 const paths = [
   {
@@ -33,31 +34,12 @@ const BlogsPage = () => {
     async () => await blogService.getAll()
   )
 
+  const navigate = useNavigate()
+
   if (result.status === 'loading') {
     return (
       <Page title='Topics' paths={paths}>
-        <Stack>
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-        </Stack>
+        <Loading />
       </Page>
     )
   }
@@ -85,7 +67,7 @@ const BlogsPage = () => {
                 <Td>{blog.topics.length}</Td>
                 <Td>{DateTime.fromISO(blog.timestamp).toLocaleString(DateTime.DATETIME_FULL)}</Td>
                 <Td w="calc(100%)">
-                  <ContentDropDown />
+                  <ContentDropDown onEdit={() => navigate(`/blogs/${blog.id}`)} />
                 </Td>
               </Tr>
             )}

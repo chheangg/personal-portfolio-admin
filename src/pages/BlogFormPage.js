@@ -2,8 +2,9 @@ import Page from "./Page"
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect, useRef } from "react"
+import { useQuery } from "react-query";
 import { Editor } from '@tinymce/tinymce-react';
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { 
   Box, 
   FormLabel,
@@ -18,17 +19,34 @@ import {
   Wrap,
   WrapItem
 } from "@chakra-ui/react"
+import Loading from "../components/Loading";
 
 import topicService from "../services/topicService";
+import blogService from "../services/blogService";
 
-const BlogForm = ({ title, paths, content, formValue, handleFormSubmit }) => {
+const BlogForm = ({ title, paths, getBlog, handleFormSubmit }) => {
+  const [formValue, setFormValue] = useState({
+    title: '',
+    caption: '',
+    topics: '',
+    content: "<p>This is the initial content of the editor.</p>"
+  })
   const [nameError, setNameError] = useState(null)
   const [captionError, setCaptionError] = useState(null)
   const [topicError, setTopicError] = useState(null)
   const [topics, setTopics] = useState([])
-  const [selectedTopics, setSelectedTopics] = useState([...formValue.topics])
+  const [selectedTopics, setSelectedTopics] = useState([])
   const editorRef = useRef(null)
   const navigate = useNavigate()
+  const params = useParams();
+  
+  const result = useQuery(
+    `blog-${params.blogId}`,
+    getBlog ? async () => await blogService.getBlog(params.blogId) : () => {},
+    {
+      enabled: getBlog && selectedTopics.length === 0,
+    }
+  )
 
   useEffect(() => {
     topicService
@@ -38,13 +56,28 @@ const BlogForm = ({ title, paths, content, formValue, handleFormSubmit }) => {
       })
   }, [])
 
+  useEffect(() => {
+    if (result.status === 'success' && selectedTopics.length === 0) {
+      setFormValue(result.data)
+      setSelectedTopics(result.data.topics)
+    }
+  }, [result, selectedTopics])
+
+  if (result.status === 'loading') {
+     return (
+      <Page title={title} paths={paths}>
+        <Loading />
+      </Page>
+     )
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     handleFormSubmit(event, selectedTopics, editorRef, navigate, {
       setNameError,
       setCaptionError,
       setTopicError,
-    })
+    }, params.blogId)
   }
 
   const handleSelect = (event) => {
@@ -76,7 +109,7 @@ const BlogForm = ({ title, paths, content, formValue, handleFormSubmit }) => {
         <Box m='8'>
           <FormControl isInvalid={nameError}>
             <FormLabel htmlFor="name">Blog name</FormLabel>
-            <Input defaultValue={formValue.name} id='name' name='name' w='20vw' placeholder="Must be at least 3 characters" bgColor='whiteAlpha.900'/>
+            <Input defaultValue={formValue.title} id='name' name='name' w='20vw' placeholder="Must be at least 3 characters" bgColor='whiteAlpha.900'/>
             <FormErrorMessage key={uuidv4()}>{nameError}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={captionError} mt='4'>
@@ -109,7 +142,7 @@ const BlogForm = ({ title, paths, content, formValue, handleFormSubmit }) => {
             <Editor
               apiKey={process.env.REACT_APP_TINYMCE_APIKEY}
               onInit={(evt, editor) => editorRef.current = editor}
-              initialValue={content}
+              initialValue={formValue.content}
               init={{
                 height: 500,
                 menubar: false,
@@ -131,7 +164,7 @@ const BlogForm = ({ title, paths, content, formValue, handleFormSubmit }) => {
                   const input = document.createElement('input');
                   input.setAttribute('type', 'file');
                   input.setAttribute('accept', 'image/*');
-              
+                  
                   input.addEventListener('change', (e) => {
                     const file = e.target.files[0];
               
@@ -184,17 +217,8 @@ const BlogForm = ({ title, paths, content, formValue, handleFormSubmit }) => {
   )
 } 
 
-const BlogFormPage = (title, paths, handleFormSubmit, content, formValue) => {
-  if (!formValue) {
-    formValue = {
-      name: '',
-      caption: '',
-      topics: '',
-      content: "<p>This is the initial content of the editor.</p>"
-    }
-  }
-
-  return () => <BlogForm content={content} formValue={formValue} title={title} paths={paths} handleFormSubmit={handleFormSubmit}/>
+const BlogFormPage = (title, paths, handleFormSubmit, getBlog) => {
+  return () => <BlogForm getBlog={getBlog} title={title} paths={paths} handleFormSubmit={handleFormSubmit}/>
 }
 
 export default BlogFormPage

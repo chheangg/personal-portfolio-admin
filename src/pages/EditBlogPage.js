@@ -11,12 +11,12 @@ const paths = [
     href: '/create'
   },
   {
-    title: 'Create Blog',
-    href: '/create/blog',
+    title: 'Edit Blog',
+    href: '/edit/blog/',
   }
 ]
 
-const handleFormSubmit = (event, selectedTopics, editorRef, navigate, errorHandler) => {
+const handleFormSubmit = (event, selectedTopics, editorRef, navigate, errorHandler, blogId) => {
   const blog = {
     title: event.target.name.value,
     caption: event.target.caption.value,
@@ -26,7 +26,7 @@ const handleFormSubmit = (event, selectedTopics, editorRef, navigate, errorHandl
   }
 
   const thumbnail = event.target.thumbnail.files[0]
-  blogService.create(blog, thumbnail)
+  blogService.update(blogId, blog, thumbnail)
     .then(data => {
       navigate('/blogs')
     })
@@ -49,6 +49,12 @@ const handleFormSubmit = (event, selectedTopics, editorRef, navigate, errorHandl
         })
     })
 }
-const CreateBlogPage = BlogFormPage('Create Blog', paths, handleFormSubmit, false)
 
-export default CreateBlogPage
+const EditBlogPage = BlogFormPage(
+  'Edit Blog',
+  paths,
+  handleFormSubmit,
+  true
+)
+
+export default EditBlogPage;
