@@ -49,6 +49,6 @@ const handleFormSubmit = (event, selectedTopics, editorRef, navigate, errorHandl
         })
     })
 }
-const CreateBlogPage = BlogFormPage('Create Blog', paths, handleFormSubmit, false)
+const CreateBlogPage = BlogFormPage('Create Blog', paths, handleFormSubmit)
 
 export default CreateBlogPage

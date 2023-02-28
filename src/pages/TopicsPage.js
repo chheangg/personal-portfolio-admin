@@ -10,9 +10,11 @@ import {
   Td,
   TableContainer,
 } from '@chakra-ui/react'
+import { useNavigate } from "react-router-dom"
 import topicService from "../services/topicService"
 import Page from "./Page"
 
+import Loading from "../components/Loading"
 import ContentDropDown from "../components/ContentDropDown"
 
 const paths = [
@@ -31,32 +33,12 @@ const TopicsPage = () => {
     'topics',
     async () => await topicService.getAll()
   )
+  const navigate = useNavigate()
 
   if (result.status === 'loading') {
     return (
       <Page title='Topics' paths={paths}>
-        <Stack>
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-          <Skeleton height='20px' />
-        </Stack>
+        <Loading />
       </Page>
     )
   }
@@ -79,7 +61,7 @@ const TopicsPage = () => {
               <Tr key={topic.id}>
                 <Td>{topic.name}</Td>
                 <Td>{topic.blogs.length} blogs</Td>
-                <Td w='calc(80%)'><ContentDropDown /></Td>
+                <Td w='calc(80%)'><ContentDropDown onEdit={() => navigate(`/topics/${topic.id}`)} /></Td>
               </Tr>
             )}
           </Tbody>

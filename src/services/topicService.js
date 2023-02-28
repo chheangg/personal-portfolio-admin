@@ -3,8 +3,8 @@ import axios from "axios";
 
 const baseUrl = '/api/topics'
 
-const create = async (name) => {
-  const result = await axios.post(baseUrl, { name })
+const create = async (topic) => {
+  const result = await axios.post(baseUrl, topic)
   return result.data
 }
 
@@ -13,4 +13,14 @@ const getAll = async () => {
   return result.data.topics
 }
 
-export default { create, getAll }
+const getTopic = async (topicId) => {
+  const result = await axios.get(baseUrl + '/' + topicId)
+  return result.data.topic
+}
+
+const update = async (topicId, topic) => {
+  const result = await axios.put(baseUrl + '/' + topicId, topic)
+  return result.data.updatedTopic
+}
+
+export default { create, getAll, getTopic, update }

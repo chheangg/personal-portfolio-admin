@@ -11,16 +11,17 @@ const paths = [
     href: '/create'
   },
   {
-    title: 'Create Topic',
-    href: '/create/topic'
+    title: 'Edit Topic',
   }
 ]
 
-const handleFormSubmit = (event, navigate, setError) => {
+const handleFormSubmit = (event, navigate, setError, topicId, queryClient) => {
+  console.log('hey')
   topicService
-    .create({ name: event.target['name'].value })
+    .update(topicId, { name: event.target['name'].value})
     .then(data => {
       navigate('/topics')
+      queryClient.setQueryData(`topic-${topicId}`, data.updatedTopic)
     })
     .catch(
       error => {
@@ -29,6 +30,6 @@ const handleFormSubmit = (event, navigate, setError) => {
     )
 }
 
-const CreateTopicPage = TopicFormPage('Create Topic', paths, handleFormSubmit)
+const EditTopicPage = TopicFormPage('Edit Topic', paths, handleFormSubmit)
 
-export default CreateTopicPage
+export default EditTopicPage

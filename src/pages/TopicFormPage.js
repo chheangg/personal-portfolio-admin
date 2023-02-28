@@ -1,17 +1,59 @@
 import Page from "./Page"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useQuery } from "react-query"
+import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { Input, FormLabel, Button, FormErrorMessage, FormControl, } from '@chakra-ui/react'
+import topicService from "../services/topicService"
+import Loading from "../components/Loading"
 
-const TopicForm = ({ title, paths, formValue, handleFormSubmit }) => {
+const TopicForm = ({ title, paths, handleFormSubmit }) => {
   const [error, setError] = useState('')
+  const [formValue, setFormValue] = useState({
+    name: ''
+  })
   const navigate = useNavigate()
+  const params = useParams()
+  const topicId = Object.keys(params).length > 0  ? params.topicId : null
+  const mustFetch = topicId ? true : false
+  const result = useQuery(
+    `topic-${params.topicId}`,
+    topicId ? async () => await topicService.getTopic(topicId) : () => {},
+    {
+      enabled: mustFetch
+    }
+  )
+
+  useEffect(() => {
+    if (result.status === 'success') {
+      setFormValue(result.data)
+    }
+  }, [result])
+
   const handleSubmit = (event) => {
     event.preventDefault()
-    handleFormSubmit(event, navigate, setError)
+    handleFormSubmit(event, navigate, setError, topicId)
   }
+
+  const handlePath = () => 
+  topicId 
+    ? 
+    paths.map(path => {
+      path.href = path.title === 'Edit Topic' ? `/topics/${topicId}` : path.href
+      return path
+    }) 
+    :
+    paths
+
+  if (result.status === 'loading') {
+    return (
+      <Page title={title} paths={handlePath()}>
+        <Loading />
+      </Page>
+    )
+  }
+
   return (
-    <Page title={title} paths={paths} >
+    <Page title={title} paths={handlePath()}>
       <form onSubmit={handleSubmit}>
         <FormControl w='20vw' ml='8' isInvalid={error}>
           <FormLabel htmlFor="name">Topic name</FormLabel>
@@ -34,13 +76,8 @@ const TopicForm = ({ title, paths, formValue, handleFormSubmit }) => {
   )
 }
 
-const TopicFormPage = (title, paths, handleFormSubmit, formValue) => {
-  if (!formValue) {
-    formValue = {
-      name: ''
-    }
-  }
-  return () => <TopicForm title={title} paths={paths} formValue={formValue} handleFormSubmit={handleFormSubmit}/>
+const TopicFormPage = (title, paths, handleFormSubmit) => {
+  return () => <TopicForm title={title} paths={paths} handleFormSubmit={handleFormSubmit}/>
 }
 
 export default TopicFormPage

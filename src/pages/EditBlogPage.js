@@ -12,7 +12,7 @@ const paths = [
   },
   {
     title: 'Edit Blog',
-    href: '/edit/blog/',
+    href: '',
   }
 ]
 
@@ -56,7 +56,6 @@ const EditBlogPage = BlogFormPage(
   'Edit Blog',
   paths,
   handleFormSubmit,
-  true
 )
 
 export default EditBlogPage;

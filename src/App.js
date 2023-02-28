@@ -11,6 +11,7 @@ import TopicsPage from "./pages/TopicsPage"
 import CreateBlogPage from "./pages/CreateBlogPage"
 import CreateTopicPage from "./pages/CreateTopicPage"
 import EditBlogPage from "./pages/EditBlogPage"
+import EditTopicPage from "./pages/EditTopicPage"
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path='/blogs' index element={<BlogsPage />}/>
         <Route path='/blogs/:blogId' index element={<EditBlogPage />}/>
         <Route path='/topics' index element={<TopicsPage />}/>
+        <Route path='/topics/:topicId' index element={<EditTopicPage />}/>
         <Route path='/create/blog' element={<CreateBlogPage />} />
         <Route path='/create/topic' element={<CreateTopicPage />} />
       </Route>

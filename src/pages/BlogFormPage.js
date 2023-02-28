@@ -20,11 +20,10 @@ import {
   WrapItem
 } from "@chakra-ui/react"
 import Loading from "../components/Loading";
-
 import topicService from "../services/topicService";
 import blogService from "../services/blogService";
 
-const BlogForm = ({ title, paths, getBlog, handleFormSubmit }) => {
+const BlogForm = ({ title, paths, handleFormSubmit }) => {
   const queryClient = useQueryClient()
   const [formValue, setFormValue] = useState({
     title: '',
@@ -40,14 +39,14 @@ const BlogForm = ({ title, paths, getBlog, handleFormSubmit }) => {
   const editorRef = useRef(null)
   const navigate = useNavigate()
   const params = useParams();
-
-  console.log(selectedTopics)
+  const blogId = Object.keys(params).length > 0  ? params.blogId : null
+  const mustFetch = blogId ? true : false
   
   const result = useQuery(
     `blog-${params.blogId}`,
-    getBlog ? async () => await blogService.getBlog(params.blogId) : () => {},
+    blogId ? async () => await blogService.getBlog(params.blogId) : () => {},
     {
-      enabled: getBlog && selectedTopics.length === 0,
+      enabled: mustFetch,
     }
   )
 
@@ -65,10 +64,20 @@ const BlogForm = ({ title, paths, getBlog, handleFormSubmit }) => {
       setSelectedTopics(result.data.topics)
     }
   }, [result, selectedTopics])
+  
+  const handlePath = () => 
+  blogId 
+    ? 
+    paths.map(path => {
+      path.href = path.title === 'Edit Blog' ? `/blogs/${params.blogId}` : path.href
+      return path
+    }) 
+    :
+    paths
 
   if (result.status === 'loading') {
      return (
-      <Page title={title} paths={paths}>
+      <Page title={title} paths={handlePath()}>
         <Loading />
       </Page>
      )
@@ -80,7 +89,7 @@ const BlogForm = ({ title, paths, getBlog, handleFormSubmit }) => {
       setNameError,
       setCaptionError,
       setTopicError,
-    }, params.blogId, queryClient)
+    }, blogId, queryClient)
   }
 
   const handleSelect = (event) => {
@@ -107,7 +116,7 @@ const BlogForm = ({ title, paths, getBlog, handleFormSubmit }) => {
   }
 
   return (
-    <Page title={title} paths={paths} >
+    <Page title={title} paths={handlePath()}>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <Box m='8'>
           <FormControl isInvalid={nameError}>
@@ -220,8 +229,8 @@ const BlogForm = ({ title, paths, getBlog, handleFormSubmit }) => {
   )
 } 
 
-const BlogFormPage = (title, paths, handleFormSubmit, getBlog) => {
-  return () => <BlogForm getBlog={getBlog} title={title} paths={paths} handleFormSubmit={handleFormSubmit}/>
+const BlogFormPage = (title, paths, handleFormSubmit) => {
+  return () => <BlogForm title={title} paths={paths} handleFormSubmit={handleFormSubmit}/>
 }
 
 export default BlogFormPage
