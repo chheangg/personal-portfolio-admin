@@ -3,6 +3,12 @@ import axios from "axios";
 
 const baseUrl = '/api/blogs'
 
+let token;
+
+const setToken = newToken => {
+  token = `bearer ${newToken}`
+}
+
 const create = async (blog, thumbnail) => {
   const formData = new FormData()
   if (thumbnail) {
@@ -61,4 +67,4 @@ const getBlog = async (blogId) => {
   return result.data.blog
 }
 
-export default { create, getAll, update, getBlog }
+export default { create, getAll, update, getBlog, setToken }

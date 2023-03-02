@@ -3,6 +3,12 @@ import axios from "axios";
 
 const baseUrl = '/api/topics'
 
+let token;
+
+const setToken = newToken => {
+  token = `bearer ${newToken}`
+}
+
 const create = async (topic) => {
   const result = await axios.post(baseUrl, topic)
   return result.data
@@ -23,4 +29,4 @@ const update = async (topicId, topic) => {
   return result.data.updatedTopic
 }
 
-export default { create, getAll, getTopic, update }
+export default { create, getAll, getTopic, update, setToken }
