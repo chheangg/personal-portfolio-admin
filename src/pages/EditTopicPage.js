@@ -17,7 +17,7 @@ const paths = [
 
 const handleFormSubmit = (event, navigate, setError, topicId, queryClient) => {
   topicService
-    .update(topicId, { name: event.target['name'].value})
+    .update(topicId, { name: event.target['name'].value })
     .then(data => {
       navigate('/topics')
       queryClient.setQueryData(`topic-${topicId}`, data.updatedTopic)

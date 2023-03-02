@@ -22,7 +22,6 @@ const handleFormSubmit = (event, selectedTopics, editorRef, navigate, errorHandl
     caption: event.target.caption.value,
     topics: selectedTopics.map(topic => topic.id),
     content: editorRef.current.getContent(),
-    author: '63d77e02d7289c7834d09a06',
   }
 
   const thumbnail = event.target.thumbnail.files[0]

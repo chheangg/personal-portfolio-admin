@@ -10,7 +10,10 @@ const setToken = newToken => {
 }
 
 const create = async (topic) => {
-  const result = await axios.post(baseUrl, topic)
+  const config = {
+    headers: { Authorization: token },
+  }
+  const result = await axios.post(baseUrl, topic, config)
   return result.data
 }
 
@@ -25,7 +28,10 @@ const getTopic = async (topicId) => {
 }
 
 const update = async (topicId, topic) => {
-  const result = await axios.put(baseUrl + '/' + topicId, topic)
+  const config = {
+    headers: { Authorization: token },
+  }
+  const result = await axios.put(baseUrl + '/' + topicId, topic,  config)
   return result.data.updatedTopic
 }
 

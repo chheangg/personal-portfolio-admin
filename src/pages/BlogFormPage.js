@@ -22,6 +22,7 @@ import {
 import Loading from "../components/Loading";
 import topicService from "../services/topicService";
 import blogService from "../services/blogService";
+import { fetchUser } from "../utilities/helper";
 
 const BlogForm = ({ title, paths, handleFormSubmit }) => {
   const queryClient = useQueryClient()
@@ -203,8 +204,13 @@ const BlogForm = ({ title, paths, handleFormSubmit }) => {
                   let imageFile = new FormData();
                   imageFile.append('image', blobInfo.blob());
                   try {
-                    const { data } = await axios.post("/api/blogs/upload", imageFile)
-                    console.log(data.path)
+                    const token = fetchUser().token
+                    const config = {
+                      headers: { Authorization: `bearer ${token}` },
+                    }
+
+                    console.log(config)
+                    const { data } = await axios.post("/api/blogs/upload", imageFile, config)
                     return Promise.resolve(data.path)
                   } catch (error) {
                     console.log(error)

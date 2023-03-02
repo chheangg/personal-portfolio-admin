@@ -13,7 +13,6 @@ const create = async (blog, thumbnail) => {
   const formData = new FormData()
   if (thumbnail) {
     formData.append('thumbnail', thumbnail)
-    console.log(thumbnail)
   }
 
   for (const key in blog) {
@@ -25,9 +24,10 @@ const create = async (blog, thumbnail) => {
     formData,
     {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        Authorization: token
       }
-    }
+    },
   )
     
   return result.data
@@ -37,7 +37,6 @@ const update = async (blogId, blog, thumbnail) => {
   const formData = new FormData()
   if (thumbnail) {
     formData.append('thumbnail', thumbnail)
-    console.log(thumbnail)
   }
 
   for (const key in blog) {
@@ -49,9 +48,10 @@ const update = async (blogId, blog, thumbnail) => {
     formData,
     {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        Authorization: token
       }
-    }
+    },
   )
     
   return result.data
