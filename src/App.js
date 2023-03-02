@@ -29,7 +29,6 @@ const App = () => {
 
   useEffect(() => {
     const userAndToken = fetchUser()
-    console.log(userAndToken)
     if (userAndToken) {
       setUser(userAndToken.user)
       blogService.setToken(userAndToken.token)
@@ -62,6 +61,7 @@ const App = () => {
     return (
       <Routes>
         <Route path='/' element={<LoginFormPage onLogin={loginHandler} />} />
+        <Route path="/*" element={<Navigate to="/" />}  />
       </Routes>
     )
   }

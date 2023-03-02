@@ -1,25 +1,30 @@
 import {
-  Center,
   FormControl,
   Input,
   FormLabel,
-  Button
+  Button,
+  Heading,
+  VStack,
+  Flex
 } from "@chakra-ui/react"
 
 const LoginFormPage = ({ onLogin }) => (
-  <Center>
+  <VStack h='100vh' maxH='100vh' bgGradient='linear(to-r, teal.300, gray.700)' color='gray.50'>
+    <Heading marginY='16'>Personal Portfolio Admin Panel</Heading>
     <form onSubmit={onLogin}>
-      <FormControl>
+      <Flex flexDir='column' gap='4'>
+      <FormControl w='20vw'>
         <FormLabel htmlFor="username">Username</FormLabel>
-        <Input id='username' name='username'></Input>
+        <Input id='username' name='username' variant='flushed'></Input>
       </FormControl>
-      <FormControl>
+      <FormControl w='20vw'>
         <FormLabel htmlFor="password">Password</FormLabel>
-        <Input id='password' name='password' type='password'></Input>
+        <Input id='password' name='password' type='password' variant='flushed'></Input>
       </FormControl>
-      <Button type='submit' mt='4'>Sign in</Button>
+      </Flex>
+      <Button type='submit' mt='4' colorScheme='teal'>Sign in</Button>
     </form>
-  </Center>
+  </VStack>
 )
 
 export default LoginFormPage
