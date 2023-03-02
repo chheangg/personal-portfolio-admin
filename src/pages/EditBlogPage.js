@@ -4,15 +4,14 @@ import blogService from "../services/blogService";
 const paths = [
   {
     title: 'Home',
-    href: '/'
+    href: '/admin/'
   },
   {
     title: 'Create',
-    href: '/create'
+    href: '/admin/create'
   },
   {
     title: 'Edit Blog',
-    href: '',
   }
 ]
 

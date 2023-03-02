@@ -39,6 +39,8 @@ const BlogForm = ({ title, paths, handleFormSubmit }) => {
   const editorRef = useRef(null)
   const navigate = useNavigate()
   const params = useParams();
+  // Does detail checking if params exist
+  // To differentiate easily with create / edit page
   const blogId = Object.keys(params).length > 0  ? params.blogId : null
   const mustFetch = blogId ? true : false
   

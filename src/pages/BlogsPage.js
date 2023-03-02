@@ -1,6 +1,5 @@
 import { useQuery } from "react-query"
 import { 
-  Skeleton,
   Table,
   Thead,
   Tbody,

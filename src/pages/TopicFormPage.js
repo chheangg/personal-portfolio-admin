@@ -14,6 +14,8 @@ const TopicForm = ({ title, paths, handleFormSubmit }) => {
   const navigate = useNavigate()
   const params = useParams()
   const topicId = Object.keys(params).length > 0  ? params.topicId : null
+  // Does detail checking if params exist
+    // To differentiate easily with create / edit page
   const mustFetch = topicId ? true : false
   const result = useQuery(
     `topic-${params.topicId}`,

@@ -18,13 +18,13 @@ const App = () => {
     <Routes>
       <Route path='/' element={<Layout />}>
         <Route index element={<HomePage />}/>
-        <Route path='/create' element={<CreatePage />}/>
-        <Route path='/blogs' index element={<BlogsPage />}/>
-        <Route path='/blogs/:blogId' index element={<EditBlogPage />}/>
-        <Route path='/topics' index element={<TopicsPage />}/>
-        <Route path='/topics/:topicId' index element={<EditTopicPage />}/>
-        <Route path='/create/blog' element={<CreateBlogPage />} />
-        <Route path='/create/topic' element={<CreateTopicPage />} />
+        <Route path='create' element={<CreatePage />}/>
+        <Route path='blogs' element={<BlogsPage />}/>
+        <Route path='blogs/:blogId' element={<EditBlogPage />}/>
+        <Route path='topics' element={<TopicsPage />}/>
+        <Route path='topics/:topicId' element={<EditTopicPage />}/>
+        <Route path='create/blog' element={<CreateBlogPage />} />
+        <Route path='create/topic' element={<CreateTopicPage />} />
       </Route>
     </Routes>
   )

@@ -11,15 +11,13 @@ const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <ChakraProvider>
-      <QueryClientProvider client={queryClient}>
-        <Router>
-          <App />
-        </Router>
-      </QueryClientProvider>
-    </ChakraProvider>
-  </React.StrictMode>
+  <ChakraProvider>
+    <QueryClientProvider client={queryClient}>
+      <Router basename='/admin'>
+        <App />
+      </Router>
+    </QueryClientProvider>
+  </ChakraProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
