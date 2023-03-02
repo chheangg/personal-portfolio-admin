@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 
 // Layout
 import Layout from "./layouts/Layout"
@@ -78,6 +78,7 @@ const App = () => {
         <Route path='create/blog' element={<CreateBlogPage />} />
         <Route path='create/topic' element={<CreateTopicPage />} />
       </Route>
+      <Route path="/*" element={<Navigate to="/admin" />}  />
     </Routes>
   )
 }
