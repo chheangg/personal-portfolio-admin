@@ -1,4 +1,4 @@
-import { useQuery } from "react-query"
+import { useQuery, useMutation, useQueryClient } from "react-query"
 import { 
   Table,
   Thead,
@@ -15,6 +15,7 @@ import Profile from "../components/Profile"
 import ContentDropDown from "../components/ContentDropDown"
 import { useNavigate } from "react-router-dom"
 import Loading from "../components/Loading"
+import PublishButton from "../components/PublishButton"
 
 const paths = [
   {
@@ -28,9 +29,17 @@ const paths = [
 ]
 
 const BlogsPage = () => {
+  const queryClient = useQueryClient()
   const result = useQuery(
     'blogs',
     async () => await blogService.getAll()
+  )
+
+  const updateBlogMutation = useMutation(
+    async ({blogId, blog}) => await blogService.update(blogId, blog),
+    {
+      onSuccess: () => queryClient.invalidateQueries('blogs')
+    }
   )
 
   const navigate = useNavigate()
@@ -65,7 +74,8 @@ const BlogsPage = () => {
                 <Td>{blog.title}</Td>
                 <Td>{blog.topics.length}</Td>
                 <Td>{DateTime.fromISO(blog.timestamp).toLocaleString(DateTime.DATETIME_FULL)}</Td>
-                <Td w="calc(100%)">
+                <Td display="flex" alignItems="center" justifyContent='flex-end' w="calc(100%)" gap='6'>
+                  <PublishButton isPublished={blog.isPublished} blog={blog} updateMethod={updateBlogMutation.mutate} />
                   <ContentDropDown onEdit={() => navigate(`/blogs/${blog.id}`)} />
                 </Td>
               </Tr>

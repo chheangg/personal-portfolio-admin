@@ -58,7 +58,14 @@ const update = async (blogId, blog, thumbnail) => {
 }
 
 const getAll = async () => {
-  const result = await axios.get(baseUrl)
+  const result = await axios.get(
+    baseUrl + '/admin',
+    {
+      headers: {
+        Authorization: token
+      }
+    }
+  )
   return result.data.blogs
 }
 
