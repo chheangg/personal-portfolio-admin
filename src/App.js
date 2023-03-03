@@ -23,6 +23,9 @@ import authService from "./services/authService"
 import { fetchUser, setUserLocally } from "./utilities/helper"
 import { useEffect, useState } from "react"
 
+// Context
+import SetUserContext from "./contexts/SetUserContext"
+
 const App = () => {
   const [user, setUser] = useState(null)
   const [loginError, setLoginError] = useState('')
@@ -68,7 +71,11 @@ const App = () => {
 
   return (
     <Routes>
-      <Route path='/' element={<Layout />}>
+      <Route path='/' element={
+        <SetUserContext.Provider value={setUser}>
+         <Layout />
+        </SetUserContext.Provider>
+      }>
         <Route index element={<HomePage />}/>
         <Route path='create' element={<CreatePage />}/>
         <Route path='blogs' element={<BlogsPage />}/>

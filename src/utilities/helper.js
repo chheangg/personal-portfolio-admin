@@ -7,4 +7,9 @@ const setUserLocally = (userAndToken) => {
   window.localStorage.setItem('BlogAuthor', JSON.stringify(userAndToken))
 }
 
-export { fetchUser, setUserLocally }
+const signUserOut = (setUser) => {
+  setUser(null)
+  window.localStorage.clear('BlogAuthor')
+}
+
+export { fetchUser, setUserLocally, signUserOut }
