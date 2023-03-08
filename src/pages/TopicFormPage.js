@@ -2,7 +2,7 @@ import Page from "./Page"
 import { useQuery } from "react-query"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { Input, FormLabel, Button, FormErrorMessage, FormControl, } from '@chakra-ui/react'
+import { Input, FormLabel, Button, FormErrorMessage, FormControl, Box } from '@chakra-ui/react'
 import topicService from "../services/topicService"
 import Loading from "../components/Loading"
 
@@ -56,24 +56,26 @@ const TopicForm = ({ title, paths, handleFormSubmit }) => {
 
   return (
     <Page title={title} paths={handlePath()}>
-      <form onSubmit={handleSubmit}>
-        <FormControl w='20vw' ml='8' isInvalid={error}>
-          <FormLabel htmlFor="name">Topic name</FormLabel>
-          <Input defaultValue={formValue.name} id='name' name='name' placeholder="Must be at least 3 characters" variant='outline' bgColor='whiteAlpha.900' />
-          <FormErrorMessage>{error}</FormErrorMessage>
-          <Button 
-            type='submit'
-            mt='6'
-            color='gray.50'
-            bgColor='gray.700'
-            _hover={{
-              bgColor:'teal.300',
-            }}
-          >
-            Submit
-          </Button>
-        </FormControl>
-      </form>
+      <Box p={['4', '8']}>
+        <form onSubmit={handleSubmit}>
+          <FormControl isInvalid={error}>
+            <FormLabel htmlFor="name">Topic name</FormLabel>
+            <Input defaultValue={formValue.name} id='name' w={{base: '100%', lg: '20vw'}} name='name' placeholder="Must be at least 3 characters" variant='outline' bgColor='whiteAlpha.900' />
+            <FormErrorMessage>{error}</FormErrorMessage>
+            <Button 
+              type='submit'
+              mt='6'
+              color='gray.50'
+              bgColor='gray.700'
+              _hover={{
+                bgColor:'teal.300',
+              }}
+            >
+              Submit
+            </Button>
+          </FormControl>
+        </form>
+      </Box>
     </Page>
   )
 }

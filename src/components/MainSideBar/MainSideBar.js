@@ -1,13 +1,34 @@
-import { Flex, Button } from "@chakra-ui/react"
+import { Flex, Button, IconButton } from "@chakra-ui/react"
 import { mdiHome, mdiPlus, mdiPost, mdiListBox } from '@mdi/js';
 import { useContext } from "react";
 import SetUserContext from "../../contexts/SetUserContext";
 import SideBarItem from "./SideBarItem"
+import { IoMdClose } from 'react-icons/io'
+import SetMenuClickContext from "../../contexts/SetMenuClickContext";
 
 const MainSideBar = () => {
   const setUser = useContext(SetUserContext)
+  const changeMenuVisibility = useContext(SetMenuClickContext)
   return (
-    <Flex flexDir='column'>
+    <Flex flexDir='column' bgColor='gray.700' color='gray.50'>
+      <IconButton
+        display={{
+          base: 'block',
+          lg: 'none'
+        }}
+        position='absolute'
+        right='0'
+        top='0'
+        margin='2'
+        bgColor='transparent'
+        icon={<IoMdClose size='48' color='#E53E3E' />}
+        _hover={{
+          bgColor:'transparent'
+        }}
+        onClick={changeMenuVisibility}
+      >
+
+      </IconButton>
       <SideBarItem text='Home' path='/' icon={mdiHome} />
       <SideBarItem text='Create' path='/create' icon={mdiPlus} />
       <SideBarItem text='Blogs' path='/blogs' icon={mdiPost} />

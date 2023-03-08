@@ -1,9 +1,12 @@
-import { Button} from "@chakra-ui/react"
+import { Button } from "@chakra-ui/react"
+import { useContext } from "react"
+import SetMenuClickContext from "../../contexts/SetMenuClickContext"
 import IconSideBarItem from "../IconSideBarItem"
 import { useNavigate } from "react-router-dom"
 
 const SideBarItem = ({ text, path, icon }) => {
   const navigate = useNavigate()
+  const changeMenuVisibility = useContext(SetMenuClickContext)
   return (
     <Button
       justifyContent='flex-start'
@@ -18,7 +21,12 @@ const SideBarItem = ({ text, path, icon }) => {
         color: 'gray.700'
       }}
       m='0'
-      onClick={() => navigate(path)}
+      onClick={() => {
+        if (changeMenuVisibility) {
+          changeMenuVisibility()
+        }
+        navigate(path)
+      }}
     >
       <IconSideBarItem icon={icon} />
       <span>{text}</span>

@@ -47,7 +47,7 @@ const TopicsPage = () => {
 
   return (
     <Page title='Topics' paths={paths}>
-      <TableContainer border='2px solid' borderColor='gray.700' borderRadius='lg' mx='4'>
+      <TableContainer border='2px solid' borderColor='gray.700' borderRadius='lg' mx='4' h='calc(80vh)' overflowY='scroll' >
         <Table variant='striped' colorScheme='gray'>
           <Thead>
             <Tr borderBottom='2px solid' bgColor='teal.200'>

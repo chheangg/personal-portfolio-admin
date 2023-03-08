@@ -21,7 +21,7 @@ const CreatePage = () => {
     <Page title='Create' paths={paths}>
       <Box px='4' mb='8'>
         <Text fontSize='18'>What would you like to create?</Text>
-        <Flex mt='4' gap='8'>
+        <Flex mt='4' gap='8' alignItems='center' justifyItems='center'>
           <ImageCard 
             text='Create a blog' 
             icon={mdiPost} 

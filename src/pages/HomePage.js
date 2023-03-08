@@ -9,7 +9,7 @@ const paths = [
 
 const HomePage = () => 
   <Page title='Home' paths={paths}>
-    <div>Hello</div>
+    <div>Welcome to your personal portfolio admin panel!</div>
   </Page>
 
 export default HomePage

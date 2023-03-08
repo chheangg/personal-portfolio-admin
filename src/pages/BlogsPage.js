@@ -7,6 +7,7 @@ import {
   Th,
   Td,
   TableContainer,
+  Box,
 } from '@chakra-ui/react'
 import blogService from "../services/blogService"
 import Page from "./Page"
@@ -56,7 +57,7 @@ const BlogsPage = () => {
 
   return (
     <Page title='Blogs' paths={paths}>
-      <TableContainer border='2px solid' borderColor='gray.700' borderRadius='lg' mx='4'>
+      <TableContainer border='2px solid' borderColor='gray.700' borderRadius='lg' mx='4' h='calc(80vh)' overflowY='scroll'>
         <Table variant='striped' colorScheme='gray'>
           <Thead>
             <Tr borderBottom='2px solid' bgColor='teal.200'>
@@ -74,9 +75,11 @@ const BlogsPage = () => {
                 <Td>{blog.title}</Td>
                 <Td>{blog.topics.length}</Td>
                 <Td>{DateTime.fromISO(blog.timestamp).toLocaleString(DateTime.DATETIME_FULL)}</Td>
-                <Td display="flex" alignItems="center" justifyContent='flex-end' w="calc(100%)" gap='6'>
-                  <PublishButton isPublished={blog.isPublished} blog={blog} updateMethod={updateBlogMutation.mutate} />
-                  <ContentDropDown onEdit={() => navigate(`/blogs/${blog.id}`)} />
+                <Td>
+                  <Box display="flex" alignItems="center"  justifyContent='flex-end' w="calc(100%)" gap='6'>
+                    <PublishButton isPublished={blog.isPublished} blog={blog} updateMethod={updateBlogMutation.mutate} />
+                    <ContentDropDown onEdit={() => navigate(`/blogs/${blog.id}`)} />
+                  </Box>
                 </Td>
               </Tr>
             )}

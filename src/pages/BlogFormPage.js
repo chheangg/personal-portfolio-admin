@@ -124,17 +124,17 @@ const BlogForm = ({ title, paths, handleFormSubmit }) => {
         <Box m='8'>
           <FormControl isInvalid={nameError}>
             <FormLabel htmlFor="name">Blog name</FormLabel>
-            <Input defaultValue={formValue.title} id='name' name='name' w='20vw' placeholder="Must be at least 3 characters" bgColor='whiteAlpha.900'/>
+            <Input defaultValue={formValue.title} id='name' w={{base: '100%', lg: '20vw'}} name='name' placeholder="Must be at least 3 characters" bgColor='whiteAlpha.900'/>
             <FormErrorMessage key={uuidv4()}>{nameError}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={captionError} mt='4'>
             <FormLabel htmlFor="caption" >Blog's caption</FormLabel>
-            <Input defaultValue={formValue.caption} id='caption' name='caption' w='20vw' placeholder="Must be at least 3 characters" bgColor='whiteAlpha.900'/>
+            <Input defaultValue={formValue.caption} id='caption' w={{base: '100%', lg: '20vw'}} name='caption' placeholder="Must be at least 3 characters" bgColor='whiteAlpha.900'/>
             <FormErrorMessage key={uuidv4()}>{captionError}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={topicError} mt='4'>
             <FormLabel htmlFor="caption" >Blog's topics</FormLabel>
-            <Select placeholder="Select topic" w='20vw' onChange={handleSelect} bgColor='whiteAlpha.900'>
+            <Select placeholder="Select topic" w={{base: '100%', lg: '20vw'}} onChange={handleSelect} bgColor='whiteAlpha.900'>
               {topics.map(topic => <option key={topic.id} value={topic.id}>{topic.name}</option>)}
             </Select>
             <Wrap w='30vw' mt='2'>

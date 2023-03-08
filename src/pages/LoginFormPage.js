@@ -10,14 +10,14 @@ import {
 
 const LoginFormPage = ({ onLogin }) => (
   <VStack h='100vh' maxH='100vh' bgGradient='linear(to-r, teal.300, gray.700)' color='gray.50'>
-    <Heading marginY='16'>Personal Portfolio Admin Panel</Heading>
+    <Heading marginY='16' textAlign='center'>Personal Portfolio Admin Panel</Heading>
     <form onSubmit={onLogin}>
       <Flex flexDir='column' gap='4'>
-      <FormControl w='20vw'>
+      <FormControl>
         <FormLabel htmlFor="username">Username</FormLabel>
         <Input id='username' name='username' variant='flushed'></Input>
       </FormControl>
-      <FormControl w='20vw'>
+      <FormControl>
         <FormLabel htmlFor="password">Password</FormLabel>
         <Input id='password' name='password' type='password' variant='flushed'></Input>
       </FormControl>
